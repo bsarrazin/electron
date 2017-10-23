@@ -13,16 +13,22 @@ var MainInterface = React.createClass({
   getInitialState: function() {
     return {
       myAppointments: loadApts
-    }//return
-  }, //getInitialState
+    }
+  },
 
   deleteMessage: function(item) {
     var allApts = this.state.myAppointments;
     var newApts = _.without(allApts, item);
     this.setState({
       myAppointments: newApts
-    }); //setState
-  }, //deleteMessage
+    });
+  },
+
+  componentDidUpdate() {
+    fs.writeFile(dataLocation, JSON.stringify(this.state.myAppointments), 'utf8', function(error) {
+      console.log(error)
+    })
+  },
 
   render: function() {
     var myAppointments = this.state.myAppointments;
@@ -34,8 +40,8 @@ var MainInterface = React.createClass({
           whichItem =  {item}
           onDelete = {this.deleteMessage}
         />
-      ) // return
-    }.bind(this)); //Appointments.map
+      )
+    }.bind(this));
     return(
       <div className="application">
         <div className="container">
@@ -48,10 +54,10 @@ var MainInterface = React.createClass({
         </div>{/* container */}
       </div>
     );
-  } //render
-});//MainInterface
+  }
+});
 
 ReactDOM.render(
   <MainInterface />,
   document.getElementById('petAppointments')
-); //render
+);
