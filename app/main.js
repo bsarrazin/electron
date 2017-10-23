@@ -7,7 +7,7 @@ app.on('ready', function() {
   var appWindow, infoWindow;
   appWindow = new BrowserWindow({
     show: false
-  }); //appWindow
+  });
 
   appWindow.loadURL('file://' + __dirname + '/index.html');
 
@@ -17,16 +17,22 @@ app.on('ready', function() {
     transparent: true,
     show: false,
     frame: false
-  }); //infoWindow
+  });
 
   infoWindow.loadURL('file://' + __dirname + '/info.html');
 
   appWindow.once('ready-to-show', function() {
     appWindow.show();
-  }); //ready-to-show
+  });
 
   ipc.on('closeInfoWindow', function(event, arg){
     event.returnValue='';
     infoWindow.hide();
-  }); //closeInfoWindow
-}); //app is ready
+  });
+
+  ipc.on('openInfoWindow', function(event, arg) {
+    event.returnValue='';
+    infoWindow.show()
+  })
+
+});
